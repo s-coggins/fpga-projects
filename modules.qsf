@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C7G
-set_global_assignment -name TOP_LEVEL_ENTITY demux_1_to_4
+set_global_assignment -name TOP_LEVEL_ENTITY Demux_LFSR_project_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 23.1STD.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:03:13  FEBRUARY 27, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Lite Edition"
@@ -50,6 +50,17 @@ set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name SYSTEMVERILOG_FILE src/mux_4_to_1.sv
 set_global_assignment -name SYSTEMVERILOG_FILE tb/mux_4_to_1_tb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE src/demux_1_to_4.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/Demux_LFSR_project_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/LFSR_24.sv
+set_location_assignment PIN_P11 -to i_clk
+set_location_assignment PIN_C10 -to i_sw0
+set_location_assignment PIN_C11 -to i_sw1
+set_location_assignment PIN_A8 -to o_led0
+set_location_assignment PIN_A9 -to o_led1
+set_location_assignment PIN_A10 -to o_led2
+set_location_assignment PIN_B10 -to o_led3
+set_global_assignment -name SYSTEMVERILOG_FILE src/count_toggler.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/Demux_Counter_project_top.sv
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
