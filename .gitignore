@@ -1,0 +1,24 @@
+# Quartus build folders
+db/
+incremental_db/
+output_files/
+
+#debug folders
+modelsim/
+simulation/
+
+# Backup and auto files
+*.bak
+*.sopcinfo
+*.rpt
+*.summary
+*.qws
+*.smsg
+*.jdi
+*.bak
+*.done
+*.cdf
+
+# Bitstreams
+*.sof
+*.pof
