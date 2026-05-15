@@ -1,0 +1,20 @@
+# Quartus build folders
+db/
+incremental_db/
+output_files/
+
+# Backup and auto files
+*.bak
+*.sopcinfo
+*.rpt
+*.summary
+*.qws
+*.smsg
+*.jdi
+*.bak
+*.done
+*.cdf
+
+# Bitstreams
+*.sof
+*.pof
