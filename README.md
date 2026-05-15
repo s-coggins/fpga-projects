@@ -2,7 +2,7 @@
 
 This repository holds the files for my previous and current FPGA related projects. 
 
-Project Environment Specs:
+Project Environment Specs:  
 **EDA Tool**: Altera/Intel Quartus Prime Lite  
 **Languages**: SystemVerilog (with bits Verilog & Schematic Capture at times)  
 **FPGA**: Altera/Intel Max 10 Family (Device: 10M50DAF484C7G on Terasic DE10-Lite board)  
