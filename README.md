@@ -34,10 +34,10 @@ Note: I have also completed the same project in schematic capture using one-hot 
 To create/combine common FPGA modules that don't necessitate projects on their own.   
   
 ### Method:      
- -MUX/DEMUX
- -LFSR
- -Count Toggler
- -Mini Project to use LFSR or Count Toggle with DEMUX to blink and select certain LEDs
+ -MUX/DEMUX  
+ -LFSR  
+ -Count Toggler  
+ -Mini Project to use LFSR or Count Toggle with DEMUX to blink and select certain LEDs  
 
 # Project 3: UART
 
@@ -47,7 +47,7 @@ To create UART TX-RX communication channel.
 ### Method:  
 This project implemented a **Finite State Machine (FSM)** to parse UART traffic, and support half and full duplex modes via o_txActive.   
   
- -TX and RX make use of IDLE, START, DATA, STOP, and RESET states to parse UART traffic
+ -TX and RX make use of IDLE, START, DATA, STOP, and RESET states to parse UART traffic  
 
 
 
