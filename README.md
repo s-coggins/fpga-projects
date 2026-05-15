@@ -5,9 +5,9 @@ This repository holds the files for my previous and current FPGA related project
 ## Project Environment Specs:  
 **EDA Tool**: Altera/Intel Quartus Prime Lite  
 **Languages**: SystemVerilog (w/ Verilog & Schematic Capture at times)  
-**FPGA**: Altera/Intel Max 10 Family (Device: 10M50DAF484C7G on Terasic DE10-Lite board)  
+**FPGA**: Altera/Intel Max 10 Family (Device: 10M50DAF484C7G)  
   **CLOCK**: 50 MHz  
-  **DEV BOARD**: 10 Switches, 2 pushbuttons, several 7-segment displays, etc.   
+  **DEV BOARD**: Terasic DE10-Lite board   
 **Simulation Tool**: ModelSim (Standalone and in Quartus)  
 
 # Project 1: DC Motor Control FSM
