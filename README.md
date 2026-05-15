@@ -48,6 +48,7 @@ To create UART TX-RX communication channel.
 This project implemented a **Finite State Machine (FSM)** to parse UART traffic, and support half and full duplex modes via o_txActive.   
   
  -TX and RX make use of IDLE, START, DATA, STOP, and RESET states to parse UART traffic  
+ -Included UART.tcl to make project download easier (source UART.tcl in tcl console)
 
 
 
