@@ -28,6 +28,34 @@ This project implemented a **Finite State Machine (FSM)** on an FPGA to control 
 
 Note: I have also completed the same project in schematic capture using one-hot encoding of its Moore state diagram, but files were not included in the github (not very relevant). 
 
+# Project 2: Mini Modules
+
+### Goal:   
+To create/combine common FPGA modules that don't necessitate projects on their own.   
+  
+### Method:      
+ -MUX/DEMUX
+ -LFSR
+ -Count Toggler
+ -Mini Project to use LFSR or Count Toggle with DEMUX to blink and select certain LEDs
+
+# Project 3: UART
+
+### Goal:   
+To create UART TX-RX communication channel.   
+  
+### Method:  
+This project implemented a **Finite State Machine (FSM)** to parse UART traffic, and support half and full duplex modes via o_txActive.   
+  
+ -TX and RX make use of IDLE, START, DATA, STOP, and RESET states to parse UART traffic
 
 
+
+# Project 4: Simple Processor
+
+### Goal:   
+To create a multistage pipelined processor.   
+  
+### Method:  
+In progress...
 
