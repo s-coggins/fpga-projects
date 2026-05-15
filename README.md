@@ -21,6 +21,7 @@ This project implemented a **Finite State Machine (FSM)** on an FPGA to control 
  -Frequency Division was used to obtain two clocks, a 1 Hz clock to update the FSM every 1s, and a 100 kHz clock for the PWM   
  -A total of 7 states were used to cover speeds 0-90%, with s0 = 0% and s6 = 90% speed  
  -Moore FSM was used to ensure stable motor speed and digit transitions (Mealy speed wasn't necessary)  
+ -PWM Duty Cycle was determined by state and mirrored speed % 
 
 
 Note: I have also completed the same project in schematic capture using one-hot encoding of its Moore state diagram, but files were not included in the github (not very relevant). 
