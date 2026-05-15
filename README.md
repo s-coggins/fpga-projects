@@ -12,10 +12,10 @@ This repository holds the files for my previous and current FPGA related project
 
 # Project 1: DC Motor Control FSM
 
-**GOAL**:   
+### GOAL:   
 To control the speed of a DC motor using pushbuttons to increase/decrease the speed in 15% increments (0-90%) and display its current speed via the 7-segment displays.   
   
-**IMPLEMENTATION**:  
+### IMPLEMENTATION:  
 This project implemented a **Finite State Machine (FSM)** on an FPGA to control the speed of a DC motor using **Pulse Width Modulation (PWM)** and **Frequency Divider (FD)** modules.   
   
  -Frequency Division was used to obtain two clocks, a 1 Hz clock to update the FSM every 1s, and a 100 kHz clock for the PWM   
@@ -28,15 +28,6 @@ This project implemented a **Finite State Machine (FSM)** on an FPGA to control 
 
 Note: I have also completed the same project in schematic capture using one-hot encoding of its Moore state diagram, but files were not included in the github (not very relevant). 
 
-#### Project Details
-- 7 distinct speed states using **Moore one-hot encoding**
-- **PWM generation** for motor speed control
-- **Frequency divider** for timing base
-- **Button input** for speed control (increase/decrease)
-- **7-segment display** showing the current speed state
-- Synthesizable in **Intel Quartus Prime**
-- Testbenches included for functional simulation
-- Simulated in **Modelsim**
 
 
 
