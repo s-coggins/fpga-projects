@@ -2,7 +2,7 @@
 
 This repository holds the files for my previous and current FPGA related projects. 
 
-Project Environment Specs:  
+##Project Environment Specs:  
 **EDA Tool**: Altera/Intel Quartus Prime Lite  
 **Languages**: SystemVerilog (with bits Verilog & Schematic Capture at times)  
 **FPGA**: Altera/Intel Max 10 Family (Device: 10M50DAF484C7G on Terasic DE10-Lite board)  
@@ -10,7 +10,7 @@ Project Environment Specs:
   **DEV BOARD**: 10 Switches, 2 pushbuttons, several 7-segment displays, etc.   
 **Simulation Tool**: ModelSim (Standalone and in Quartus)  
 
-### Project 1: DC Motor Control FSM
+# Project 1: DC Motor Control FSM
 
 **GOAL**:   
 To control the speed of a DC motor using pushbuttons to increase/decrease the speed in 15% increments (0-90%) and display its current speed via the 7-segment displays.   
