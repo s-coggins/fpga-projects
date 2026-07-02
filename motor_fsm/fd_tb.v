@@ -3,12 +3,12 @@
 module tb_fd;
 
     reg clk;
-    wire clk_out;
+    wire clk_enable;
 
-    // Instantiate your divider
+    // Instantiate divider
     fd uut (
         .i_clk_50MHz(clk),
-        .o_clk_out(clk_out)
+        .o_clk_enable(clk_enable)
     );
 
     // Generate a 50 MHz clock (20 ns period)
@@ -20,7 +20,7 @@ module tb_fd;
         clk = 0;
 
         // Run long enough to see several output toggles
-        #10000;   // 10 µs (enough for several 100kHz cycles)
+        #100000;   // (enough for several 100kHz cycles)
         $stop;
     end
 

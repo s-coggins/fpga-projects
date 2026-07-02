@@ -1,7 +1,35 @@
-// 7-segment display decoder (common anode)
+/*
+Title: 	7SEG (DECODER)
+Author: 	Sean Coggins
+Date: 	7/2/2026
+Version: 1.1
+
+Change Log:
+*v1.1 [7/2/26] 
+-Creation of header block
+-Added more comments per interview feedback
+--------------------------------------------------
+
+FUNCTION:
+-Decode 4-bit input to corresponding 7-segment display value
+-Displays 4-bit value as hex equivalent {0-9; a,b,c,d,e,f}
+--------------------------------------------------
+
+INPUTS (Designed for Terasic DE10-Lite / MAX 10):
+i_hex: 4-bit hex value to be decoded
+--------------------------------------------------
+
+OUTPUTS (Designed for Terasic DE10-Lite / MAX 10):
+o_seg: 7-bit output representing equivalent input on 7-segment display
+-------------------------------------------------- 
+
+*NOTES:
+-7-segment display is common anode (active LOW to light up)
+--------------------------------------------------
+*/
 module seven_seg_decoder(
-    input  [3:0] i_hex,     // 4-bit input
-    output reg [6:0] o_seg  // {a,b,c,d,e,f,g}
+    input  [3:0] i_hex,     
+    output reg [6:0] o_seg   
 );
 
 always @(*) begin
