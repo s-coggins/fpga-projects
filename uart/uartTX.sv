@@ -1,12 +1,51 @@
 /*
+Title: 	 UART TX
+Author: 	 Sean Coggins
+Date: 	 7/3/2026
+Version:  1.1
+Platform: Terasic DE10-Lite (Intel MAX 10)
 
-assumes no parity bit, allows variable data width (5-9), baud rate, fpga clock, but fixed start/stop width (1)
+Change Log:
+*v1.1 [7/3/26] 
+-Creation of header block
+-Added more comments per interview feedback
+--------------------------------------------------
 
-requires user to calculate baud_tick (clocks per bit):
-BAUD_TICK = FPGA_CLK / BAUD_RATE
-Example: 50 MHz FPGA CLK, 115200 Baud rate
-BAUD_TICK = 50000000 / 115200 = 434
+FUNCTION:
+
+-UART transmission logic module
+--------------------------------------------------
+
+INPUTS:
+
+i_clk: 		Desired clock input to determine baud_tick
+i_txDV: 		Data valid flag; Data ready to be transmitted
+i_txByte:	UART data packet to be transmitted
+
+--------------------------------------------------
+
+OUTPUTS:
+
+o_txDone: 	Done transmitting data flag
+o_txActive:	Actively transmitting data flag
+o_txBit:		1-bit transmitted at a time from i_txByte
+-------------------------------------------------- 
+
+*NOTES:
+
+-Assumes no parity bit
+-Accepts 5 to 9-bit data width; 1-bit start/stop bit
+-Requires user to calculate baud_tick / clocks per bit
+-Default baud_tick parameter configured for 50 MHz clock
+-BAUD_TICK:
+	BAUD_TICK = FPGA_CLK / BAUD_RATE
+	Example: 50 MHz FPGA CLK, 115200 Baud rate
+	BAUD_TICK = 50000000 / 115200 = 434
+	
+-$clog2: minimum bits to represent value, auto-sizes counter widths
+--------------------------------------------------
 */
+
 module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 	(
 	input 						i_clk,
@@ -14,11 +53,11 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 	input [DATA_WIDTH-1:0] 	i_txByte,
 	output 						o_txDone,
 	output 						o_txActive,
-	output reg					o_txBit
+	output 						o_txBit
 	);
 	
 	
-	//implement a 4 state FSM; IDLE, START, DATA, STOP
+	//implement a 5 state FSM; IDLE, START, DATA, STOP, RESET
 	localparam s_IDLE 	= 3'b000;
 	localparam s_START 	= 3'b001;
 	localparam s_DATA 	= 3'b010;
@@ -27,12 +66,12 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 	
 	
 	
-	reg r_txBit 										= 1'b1;
-	reg r_txDone										= 1'b0;
-	reg r_txActive										= 1'b0;
-	reg [2:0] 							r_currState = s_IDLE;
-	reg [DATA_WIDTH-1:0] 			r_txByte 	= 0;
-	reg [$clog2(BAUD_TICK)-1:0] 	r_clkCount	= 0;
+	reg r_txBit 										= 1'b1; //transmit 1-bit per BAUD_TICK
+	reg r_txDone										= 1'b0; //transmission completion flag
+	reg r_txActive										= 1'b0; //transmission active flag
+	reg [2:0] 							r_currState = s_IDLE; //initialize in IDLE state
+	reg [DATA_WIDTH-1:0] 			r_txByte 	= 0; //txByte supports 5-9 data bits (per UART standards)
+	reg [$clog2(BAUD_TICK)-1:0] 	r_clkCount	= 0; 
 	reg [$clog2(DATA_WIDTH)-1:0] 	r_bitIndex 	= 0;
 	
 	
@@ -40,9 +79,9 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 	always @(posedge i_clk)
 	begin
 		case(r_currState)
-			s_IDLE: //transmit 1 while inactive
+			s_IDLE: //transmit HIGH (1) while inactive
 				begin
-					o_txBit 		<= 1'b1;
+					r_txBit 		<= 1'b1;
 					r_txDone 	<= 1'b0;
 					r_clkCount 	<= 1'b0;
 					r_bitIndex 	<= 1'b0;
@@ -51,15 +90,15 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 						begin
 								r_currState <= s_START;
 								r_txByte 	<= i_txByte;//load data bus
-								r_txActive 	<= 1'b1;
+								r_txActive 	<= 1'b1;	//transmitting
 						end
 					else
 						r_currState <= s_IDLE;
 				end //case IDLE
 			
-			s_START: //send start bit (low/0)
+			s_START: //send start bit LOW (0)
 				begin
-					o_txBit <= 1'b0;
+					r_txBit <= 1'b0;
 					
 					if (r_clkCount < (BAUD_TICK-1))
 						begin
@@ -75,15 +114,18 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 			
 			s_DATA: //transmit r_txByte LSB to MSB, 1 bit per BAUD_TICK
 				begin
-					o_txBit <= r_txByte[r_bitIndex];
-					
+					//transmit current bit
+					r_txBit <= r_txByte[r_bitIndex];
+					//wait 1 BAUD_TICK cycle
 					if (r_clkCount < (BAUD_TICK-1))
 						begin
 							r_clkCount 	<= r_clkCount + 1;
 							r_currState <= s_DATA;
 						end
+					//after 1 cycle
 					else 
 						begin
+							//move on to next bit; reset cycle
 							r_clkCount 	<= 0;
 							
 							if (r_bitIndex < (DATA_WIDTH-1))
@@ -91,6 +133,7 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 									r_bitIndex 	<= r_bitIndex + 1;
 									r_currState <= s_DATA;
 								end
+							//once all bits are transmitted, move to STOP state
 							else
 								begin
 									r_bitIndex 	<= 0;
@@ -101,7 +144,7 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 			
 			s_STOP: //wait out stop bit
 				begin
-					o_txBit <= 1'b1;
+					r_txBit <= 1'b1;
 					
 					if (r_clkCount < (BAUD_TICK-1))
 						begin
@@ -129,6 +172,7 @@ module uartTX #(parameter DATA_WIDTH = 8, BAUD_TICK = 434)
 		
 	end
 	
+	assign o_txBit 	= r_txBit;
 	assign o_txActive = r_txActive;
 	assign o_txDone 	= r_txDone;
 	
